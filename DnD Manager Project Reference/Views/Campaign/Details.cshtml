@@ -1,0 +1,38 @@
+@model DnDManager.Models.Campaign
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+<p>@Model.Description</p>
+
+<hr />
+
+<div class="row">
+    <div class="col-md-4">
+        <h4>Characters</h4>
+        <a asp-controller="Character" asp-action="Index" asp-route-campaignId="@Model.CampaignId"
+           class="btn btn-sm btn-outline-primary mb-2">View Characters</a>
+        <a asp-controller="Character" asp-action="Create" asp-route-campaignId="@Model.CampaignId"
+           class="btn btn-sm btn-outline-success mb-2">Add Character</a>
+    </div>
+    <div class="col-md-4">
+        <h4>Session Logs</h4>
+        <a asp-controller="SessionLog" asp-action="Index" asp-route-campaignId="@Model.CampaignId"
+           class="btn btn-sm btn-outline-primary mb-2">View Sessions</a>
+        <a asp-controller="SessionLog" asp-action="Create" asp-route-campaignId="@Model.CampaignId"
+           class="btn btn-sm btn-outline-success mb-2">Log Session</a>
+    </div>
+    <div class="col-md-4">
+        <h4>Combat</h4>
+        <a asp-controller="Combat" asp-action="Index" asp-route-campaignId="@Model.CampaignId"
+           class="btn btn-sm btn-outline-primary mb-2">Combat Tracker</a>
+        <a asp-controller="Combat" asp-action="Create" asp-route-campaignId="@Model.CampaignId"
+           class="btn btn-sm btn-outline-success mb-2">Add Combatant</a>
+    </div>
+</div>
+
+<hr />
+<a asp-action="Index" class="btn btn-secondary">Back to Campaigns</a>
+<a asp-action="Edit" asp-route-id="@Model.CampaignId" class="btn btn-outline-secondary">Edit Campaign</a>

@@ -1,0 +1,27 @@
+@model DnDManager.Models.Character
+
+@{
+    ViewData["Title"] = Model.Name;
+}
+
+<h2>@Model.Name</h2>
+
+<dl class="row">
+    <dt class="col-sm-3">Class</dt>
+    <dd class="col-sm-9">@Model.Class</dd>
+
+    <dt class="col-sm-3">Race</dt>
+    <dd class="col-sm-9">@Model.Race</dd>
+
+    <dt class="col-sm-3">Level</dt>
+    <dd class="col-sm-9">@Model.Level</dd>
+
+    <dt class="col-sm-3">HP</dt>
+    <dd class="col-sm-9">@Model.CurrentHP / @Model.MaxHP</dd>
+
+    <dt class="col-sm-3">Armor Class</dt>
+    <dd class="col-sm-9">@Model.AC</dd>
+</dl>
+
+<a asp-action="Edit" asp-route-id="@Model.CharacterId" class="btn btn-secondary">Edit</a>
+<a asp-action="Index" asp-route-campaignId="@Model.CampaignId" class="btn btn-outline-secondary">Back to Characters</a>

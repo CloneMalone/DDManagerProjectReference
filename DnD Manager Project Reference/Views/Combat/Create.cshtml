@@ -1,0 +1,38 @@
+@model DnDManager.Models.Combatant
+
+@{
+    ViewData["Title"] = "Add Combatant";
+}
+
+<h2>Add Combatant</h2>
+
+<form asp-action="Create" method="post">
+
+    <input type="hidden" asp-for="CampaignId" value="@ViewBag.CampaignId" />
+
+    <div class="mb-3">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control" />
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="MaxHP" class="form-label"></label>
+        <input asp-for="MaxHP" class="form-control" />
+        <span asp-validation-for="MaxHP" class="text-danger"></span>
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="CurrentHP" class="form-label"></label>
+        <input asp-for="CurrentHP" class="form-control" />
+    </div>
+
+    <div class="mb-3">
+        <label asp-for="Initiative" class="form-label"></label>
+        <input asp-for="Initiative" class="form-control" />
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add to Combat</button>
+    <a asp-action="Index" asp-route-campaignId="@ViewBag.CampaignId" class="btn btn-secondary">Cancel</a>
+
+</form>

@@ -1,0 +1,46 @@
+@model List<DnDManager.Models.SessionLog>
+
+@{
+    ViewData["Title"] = "Session Logs";
+}
+
+<h2>Session Logs</h2>
+
+<a asp-action="Create" asp-route-campaignId="@ViewBag.CampaignId" class="btn btn-primary mb-3">+ Log Session</a>
+<a asp-controller="Campaign" asp-action="Details" asp-route-id="@ViewBag.CampaignId"
+   class="btn btn-secondary mb-3">Back to Campaign</a>
+
+@if (Model.Count == 0)
+{
+    <p>No sessions logged yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Date</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var log in Model)
+            {
+                <tr>
+                    <td>@log.Title</td>
+                    <td>@log.SessionDate.ToShortDateString()</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@log.SessionLogId" class="btn btn-sm btn-info">View</a>
+                        <a asp-action="Edit" asp-route-id="@log.SessionLogId" class="btn btn-sm btn-secondary">Edit</a>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@log.SessionLogId" />
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Delete this session log?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

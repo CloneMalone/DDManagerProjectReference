@@ -1,0 +1,63 @@
+@model List<DnDManager.Models.Combatant>
+
+@{
+    ViewData["Title"] = "Combat Tracker";
+}
+
+<h2>Combat Tracker</h2>
+
+<a asp-action="Create" asp-route-campaignId="@ViewBag.CampaignId" class="btn btn-primary mb-3">+ Add Combatant</a>
+<a asp-controller="Campaign" asp-action="Details" asp-route-id="@ViewBag.CampaignId"
+   class="btn btn-secondary mb-3">Back to Campaign</a>
+
+@if (Model.Count == 0)
+{
+    <p>No combatants yet. Add some to start tracking.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Initiative</th>
+                <th>Name</th>
+                <th>HP</th>
+                <th>Status</th>
+                <th>Update HP</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var combatant in Model)
+            {
+                <tr class="@(combatant.IsDefeated ? "table-secondary text-muted" : "")">
+                    <td>@combatant.Initiative</td>
+                    <td>@combatant.Name</td>
+                    <td>@combatant.CurrentHP / @combatant.MaxHP</td>
+                    <td>@(combatant.IsDefeated ? "Defeated" : "Active")</td>
+                    <td>
+                        <form asp-action="UpdateHP" method="post" style="display:inline">
+                            <input type="hidden" name="combatantId" value="@combatant.CombatantId" />
+                            <input type="number" name="newHP" value="@combatant.CurrentHP"
+                                   min="0" max="@combatant.MaxHP" style="width:70px" />
+                            <button type="submit" class="btn btn-sm btn-warning">Set HP</button>
+                        </form>
+                    </td>
+                    <td>
+                        <form asp-action="ToggleDefeated" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@combatant.CombatantId" />
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">
+                                @(combatant.IsDefeated ? "Revive" : "Defeat")
+                            </button>
+                        </form>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@combatant.CombatantId" />
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Remove this combatant?')">Remove</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

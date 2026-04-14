@@ -1,0 +1,54 @@
+@model List<DnDManager.Models.Character>
+
+@{
+    ViewData["Title"] = "Characters";
+}
+
+<h2>Characters</h2>
+
+<a asp-action="Create" asp-route-campaignId="@ViewBag.CampaignId" class="btn btn-primary mb-3">+ Add Character</a>
+<a asp-controller="Campaign" asp-action="Details" asp-route-id="@ViewBag.CampaignId"
+   class="btn btn-secondary mb-3">Back to Campaign</a>
+
+@if (Model.Count == 0)
+{
+    <p>No characters yet.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Class</th>
+                <th>Race</th>
+                <th>Level</th>
+                <th>HP</th>
+                <th>AC</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var character in Model)
+            {
+                <tr>
+                    <td>@character.Name</td>
+                    <td>@character.Class</td>
+                    <td>@character.Race</td>
+                    <td>@character.Level</td>
+                    <td>@character.CurrentHP / @character.MaxHP</td>
+                    <td>@character.AC</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@character.CharacterId" class="btn btn-sm btn-info">View</a>
+                        <a asp-action="Edit" asp-route-id="@character.CharacterId" class="btn btn-sm btn-secondary">Edit</a>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@character.CharacterId" />
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Delete this character?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

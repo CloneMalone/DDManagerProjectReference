@@ -1,0 +1,17 @@
+@model DnDManager.Models.SessionLog
+
+@{
+    ViewData["Title"] = Model.Title;
+}
+
+<h2>@Model.Title</h2>
+<p class="text-muted">@Model.SessionDate.ToLongDateString()</p>
+
+<h5>Summary</h5>
+<p>@Model.Summary</p>
+
+<h5>Notes</h5>
+<p>@Model.Notes</p>
+
+<a asp-action="Edit" asp-route-id="@Model.SessionLogId" class="btn btn-secondary">Edit</a>
+<a asp-action="Index" asp-route-campaignId="@Model.CampaignId" class="btn btn-outline-secondary">Back to Sessions</a>

@@ -1,0 +1,44 @@
+@model List<DnDManager.Models.Campaign>
+
+@{
+    ViewData["Title"] = "Campaigns";
+}
+
+<h2>Campaigns</h2>
+
+<a asp-action="Create" class="btn btn-primary mb-3">+ New Campaign</a>
+
+@if (Model.Count == 0)
+{
+    <p>No campaigns yet. Create one to get started.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var campaign in Model)
+            {
+                <tr>
+                    <td>@campaign.Name</td>
+                    <td>@campaign.Description</td>
+                    <td>
+                        <a asp-action="Details" asp-route-id="@campaign.CampaignId" class="btn btn-sm btn-info">View</a>
+                        <a asp-action="Edit" asp-route-id="@campaign.CampaignId" class="btn btn-sm btn-secondary">Edit</a>
+                        <form asp-action="Delete" method="post" style="display:inline">
+                            <input type="hidden" name="id" value="@campaign.CampaignId" />
+                            <button type="submit" class="btn btn-sm btn-danger"
+                                    onclick="return confirm('Delete this campaign?')">Delete</button>
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
